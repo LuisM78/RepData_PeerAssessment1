@@ -1,4 +1,9 @@
-# Reproducible Research: Peer Assessment 1
+---
+title: "Reproducible Research: Peer Assessment 1"
+output: 
+  html_document:
+    keep_md: true
+---
 
 
 ## Loading and preprocessing the data
@@ -30,7 +35,7 @@ The histogram
 hist(totalstepsperday$x,xlab="Steps per day")
 ```
 
-![](./PA1_template_files/figure-html/unnamed-chunk-3-1.png) 
+![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3-1.png) 
 
 ```r
 mediantotalperday <-aggregate(newdata$steps,by=list(newdata$time_type),FUN=median)
@@ -105,7 +110,7 @@ averagenumberofstpes<-aggregate(newdata$steps,by=list(newdata$interval),FUN=mean
 plot(averagenumberofstpes$Group.1,averagenumberofstpes$x,xlab="interval",ylab="AverageNumberofSteps",type="l")
 ```
 
-![](./PA1_template_files/figure-html/unnamed-chunk-4-1.png) 
+![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4-1.png) 
 
 ```r
 interval<-averagenumberofstpes[averagenumberofstpes$x==max(averagenumberofstpes$x),]$Group.1
@@ -134,7 +139,7 @@ meantotalperday2 <-aggregate(data$steps,by=list(data$time_type),FUN=mean)
 hist(totalstepsperday2$x,xlab="Steps per day")
 ```
 
-![](./PA1_template_files/figure-html/unnamed-chunk-5-1.png) 
+![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5-1.png) 
 
 ```r
 mediantotalperday2 <-aggregate(data$steps,by=list(data$time_type),FUN=median)
@@ -231,6 +236,6 @@ library(lattice)
 xyplot(meantotalstepperday3$x ~ meantotalstepperday3$Group.3 | f, layout=c(1,2),type='l')
 ```
 
-![](./PA1_template_files/figure-html/unnamed-chunk-6-1.png) 
+![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6-1.png) 
 
 As seen from the graph, there is a slight difference between the average number of steps between the weekday and the weekend.
