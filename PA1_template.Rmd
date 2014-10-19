@@ -8,18 +8,84 @@ output:
 
 ## Loading and preprocessing the data
 
+```{r}
+data <- read.csv(unz("activity.zip","activity.csv"))
+
+data_unaltered <- read.csv(unz("activity.zip","activity.csv"))
+
+data_type<-as.Date(data$date,"%Y-%m-%d")
+
+data$time_type <- data_type
+
+
+newdata<- data[complete.cases(data),]
+```
 
 
 ## What is mean total number of steps taken per day?
+```{r}
+totalstepsperday <- aggregate(newdata$steps,by=list(newdata$time_type),FUN=sum)
+meantotalperday <-aggregate(newdata$steps,by=list(newdata$time_type),FUN=mean)
+```
+The histogram
+```{r}
+hist(totalstepsperday$x,xlab="Steps per day")
+mediantotalperday <-aggregate(newdata$steps,by=list(newdata$time_type),FUN=median)
 
+newdata2 <-meantotalperday
+newdata2$median <- mediantotalperday$x
+colnames(newdata2)[2]<-"Meantotalperday"
+colnames(newdata2)[1]<-"Date"
+print(newdata2)
 
-
+```
 ## What is the average daily activity pattern?
+```{r}
+averagenumberofstpes<-aggregate(newdata$steps,by=list(newdata$interval),FUN=mean)
+plot(averagenumberofstpes$Group.1,averagenumberofstpes$x,xlab="interval",ylab="AverageNumberofSteps",type="l")
 
-
-
+interval<-averagenumberofstpes[averagenumberofstpes$x==max(averagenumberofstpes$x),]$Group.1
+print(interval)
+```
 ## Imputing missing values
+```{r}
+newdata3<- data[!complete.cases(data),]
+missingrows<-nrow(newdata3)
+print(missingrows)
+
+data[!complete.cases(data),]$steps=1
+totalstepsperday2 <- aggregate(data$steps,by=list(data$time_type),FUN=sum)
+meantotalperday2 <-aggregate(data$steps,by=list(data$time_type),FUN=mean)
+hist(totalstepsperday2$x,xlab="Steps per day")
+
+mediantotalperday2 <-aggregate(data$steps,by=list(data$time_type),FUN=median)
 
 
+
+newdata5 <-meantotalperday2
+newdata5$median <- mediantotalperday2$x
+colnames(newdata5)[2]<-"Meantotalperday"
+colnames(newdata5)[1]<-"Date"
+print(newdata5)
+```
+As can be seen in the histogram graph, the profiles change significantly between the first and second histogram. for the mean values, the difference is not so large. FOr the median value, it shows in the table that it takes the value of the replacement.
 
 ## Are there differences in activity patterns between weekdays and weekends?
+
+```{r}
+
+dataWorWekend <-c("Wekend","Week","Week","Week","Week","Week","Wekend")[as.POSIXlt(data$time_type)$wday+1]
+
+
+data$dataWorWekend <- dataWorWekend 
+meantotalstepperday3 <-aggregate(data$steps,by=list(data$time_type,data$dataWorWekend,data$interval),FUN=mean)
+
+f <- factor(meantotalstepperday3$Group.2,labels=c("weekend","weekday"))
+
+library(lattice)
+
+xyplot(meantotalstepperday3$x ~ meantotalstepperday3$Group.3 | f, layout=c(1,2),type='l')
+
+```
+
+As seen from the graph, there is a slight difference between the average number of steps between the weekday and the weekend.
