@@ -1,9 +1,9 @@
 ---
 title: 'Reproducible Research: Peer Assessment 1'
 output:
+  pdf_document: default
   html_document:
     keep_md: yes
-  pdf_document: default
 ---
 
 
@@ -27,6 +27,9 @@ newdata<- data[complete.cases(data),]
 ```{r}
 totalstepsperday <- aggregate(newdata$steps,by=list(newdata$time_type),FUN=sum)
 meantotalperday <-aggregate(newdata$steps,by=list(newdata$time_type),FUN=mean)
+
+
+mean(totalstepsperday)
 ```
 
 
