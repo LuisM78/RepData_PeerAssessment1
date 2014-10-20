@@ -29,7 +29,8 @@ totalstepsperday <- aggregate(newdata$steps,by=list(newdata$time_type),FUN=sum)
 meantotalperday <-aggregate(newdata$steps,by=list(newdata$time_type),FUN=mean)
 
 
-mean(totalstepsperday)
+mean(totalstepsperday$x)
+median(totalstepsperday$x)
 ```
 
 
