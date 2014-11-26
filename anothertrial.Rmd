@@ -1,11 +1,7 @@
 ---
-title: "Reproducible Research Peer Assessment 1"
-output:
-  html_document: default
-  pdf_document:
-    keep_tex: yes
+title: "trial2"
+output: pdf_document
 ---
-
 
 ## Loading and preprocessing the data
 
@@ -24,24 +20,16 @@ newdata<- data[complete.cases(data),]
 
 
 ## What is mean total number of steps taken per day?
-```{r cache=TRUE}
+```{r}
 totalstepsperday <- aggregate(newdata$steps,by=list(newdata$time_type),FUN=sum)
 meantotalperday <-aggregate(newdata$steps,by=list(newdata$time_type),FUN=mean)
 
 
 meanperday <-mean(totalstepsperday$x)
-meanperday
 medianperday <- median(totalstepsperday$x)
-medianperday
-val<- as.character(meanperday)
-val2 <- medianperday
 ```
 
-
-the mean is `r val`
-the mean is `r meanperday`
-the median is `r val2`
-
+The mean is `r meanperday` and the median is `r medianperday` 
 
 The histogram
 ```{r}
@@ -55,7 +43,6 @@ colnames(newdata2)[1]<-"Date"
 print(newdata2)
 
 ```
-
 ## What is the average daily activity pattern?
 ```{r}
 averagenumberofstpes<-aggregate(newdata$steps,by=list(newdata$interval),FUN=mean)
@@ -85,8 +72,7 @@ colnames(newdata5)[2]<-"Meantotalperday"
 colnames(newdata5)[1]<-"Date"
 print(newdata5)
 ```
-
-As can be seen in the histogram graph, the profiles change significantly between the first and second histogram. for the mean values, the difference is not so large FOr the median value, it shows in the table that it takes the value of the replacement
+As can be seen in the histogram graph, the profiles change significantly between the first and second histogram. for the mean values, the difference is not so large. FOr the median value, it shows in the table that it takes the value of the replacement.
 
 ## Are there differences in activity patterns between weekdays and weekends?
 

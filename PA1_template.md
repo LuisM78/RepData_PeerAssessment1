@@ -1,4 +1,10 @@
-# Reproducible Research: Peer Assessment 1
+---
+title: "Reproducible Research Peer Assessment 1"
+output:
+  html_document: default
+  pdf_document:
+    keep_tex: yes
+---
 
 
 ## Loading and preprocessing the data
@@ -23,7 +29,34 @@ newdata<- data[complete.cases(data),]
 ```r
 totalstepsperday <- aggregate(newdata$steps,by=list(newdata$time_type),FUN=sum)
 meantotalperday <-aggregate(newdata$steps,by=list(newdata$time_type),FUN=mean)
+
+
+meanperday <-mean(totalstepsperday$x)
+meanperday
 ```
+
+```
+## [1] 10766.19
+```
+
+```r
+medianperday <- median(totalstepsperday$x)
+medianperday
+```
+
+```
+## [1] 10765
+```
+
+```r
+val<- as.character(meanperday)
+val2 <- medianperday
+```
+
+
+the mean is 10766.1886792453
+the mean is 1.0766189 &times; 10<sup>4</sup>
+the median is 10765
 
 
 The histogram
@@ -32,7 +65,7 @@ The histogram
 hist(totalstepsperday$x,xlab="Steps per day")
 ```
 
-![](./PA1_template_files/figure-html/unnamed-chunk-3-1.png) 
+![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3-1.png) 
 
 ```r
 mediantotalperday <-aggregate(newdata$steps,by=list(newdata$time_type),FUN=median)
@@ -100,6 +133,7 @@ print(newdata2)
 ## 52 2012-11-28      35.3576389      0
 ## 53 2012-11-29      24.4687500      0
 ```
+
 ## What is the average daily activity pattern?
 
 ```r
@@ -107,7 +141,7 @@ averagenumberofstpes<-aggregate(newdata$steps,by=list(newdata$interval),FUN=mean
 plot(averagenumberofstpes$Group.1,averagenumberofstpes$x,xlab="interval",ylab="AverageNumberofSteps",type="l")
 ```
 
-![](./PA1_template_files/figure-html/unnamed-chunk-4-1.png) 
+![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4-1.png) 
 
 ```r
 interval<-averagenumberofstpes[averagenumberofstpes$x==max(averagenumberofstpes$x),]$Group.1
@@ -136,7 +170,7 @@ meantotalperday2 <-aggregate(data$steps,by=list(data$time_type),FUN=mean)
 hist(totalstepsperday2$x,xlab="Steps per day")
 ```
 
-![](./PA1_template_files/figure-html/unnamed-chunk-5-1.png) 
+![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5-1.png) 
 
 ```r
 mediantotalperday2 <-aggregate(data$steps,by=list(data$time_type),FUN=median)
@@ -214,7 +248,8 @@ print(newdata5)
 ## 60 2012-11-29      24.4687500      0
 ## 61 2012-11-30       1.0000000      1
 ```
-As can be seen in the histogram graph, the profiles change significantly between the first and second histogram. for the mean values, the difference is not so large. FOr the median value, it shows in the table that it takes the value of the replacement.
+
+As can be seen in the histogram graph, the profiles change significantly between the first and second histogram. for the mean values, the difference is not so large FOr the median value, it shows in the table that it takes the value of the replacement
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
@@ -233,6 +268,6 @@ library(lattice)
 xyplot(meantotalstepperday3$x ~ meantotalstepperday3$Group.3 | f, layout=c(1,2),type='l')
 ```
 
-![](./PA1_template_files/figure-html/unnamed-chunk-6-1.png) 
+![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6-1.png) 
 
 As seen from the graph, there is a slight difference between the average number of steps between the weekday and the weekend.
